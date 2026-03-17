@@ -26,7 +26,7 @@ BASE_PARAMETERS = {
     'logging.exp_dir': [args.exp_dir],
     'model.pretrained_version': [0],
     'params.cuda_no': [5],
-    'params.seed': [6]
+    'params.seed': [1]
 }
 
 base_test_transform = 'resize'
@@ -121,20 +121,6 @@ BILATERAL_AND_GRAYSCALE_PARAMETERS = {
     'params.protocol_name': ['{}_bilateral_grayscale'.format(base_test_transform)]
 }
 
-WAVELET_TEXTURE_PARAMETERS = {
-    'dataaug.test_augmentations': ['{}_wavelettexture'.format(base_test_transform)],
-    'dataaug.wavelet_type': ['haar'],
-    'dataaug.wavelet_level': [6], # You can easily add [6, 7] here later to test different decomposition levels
-    'params.protocol_name': ['{}_wavelet_texture'.format(base_test_transform)],
-}
-
-WAVELET_SHAPE_PARAMETERS = {
-    'dataaug.test_augmentations': ['{}_waveletshape'.format(base_test_transform)],
-    'dataaug.wavelet_type': ['haar'],
-    'dataaug.wavelet_level': [6],
-    'params.protocol_name': ['{}_wavelet_shape'.format(base_test_transform)],
-}
-
 
 
 ALL_SETUPS = [
@@ -149,9 +135,7 @@ ALL_SETUPS = [
     PATCH_SHUFFLE_AND_GRAYSCALE_PARAMETERS,
     BILATERAL_AND_PATCH_SHUFFLE_PARAMETERS1,
     BILATERAL_AND_PATCH_SHUFFLE_PARAMETERS2,
-    BILATERAL_AND_GRAYSCALE_PARAMETERS,
-    WAVELET_TEXTURE_PARAMETERS,
-    WAVELET_SHAPE_PARAMETERS 
+    BILATERAL_AND_GRAYSCALE_PARAMETERS
 ]
 
 for dataset in args.datasets:
