@@ -30,8 +30,10 @@ def update_dataset_parameter(cfg, dataset):
 
 @hydra.main(version_base=None, config_path="conf", config_name="config")
 def main(cfg):
-    os.environ["CUDA_VISIBLE_DEVICES"] = cfg.params.cuda_no
-    os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
+    if cfg.params.slurm_bypass:
+        print('Bypassing slurm, using GPU: {}'.format(cfg.params.cuda_no))
+        os.environ["CUDA_VISIBLE_DEVICES"] = cfg.params.cuda_no
+        os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
     print(OmegaConf.to_yaml(cfg))
 
     import torch
@@ -76,14 +78,23 @@ def main(cfg):
             model_path = cfg.logging.ckpt_path
 
         model = BaseModel(cfg, dm, network)
-        model.load_state_dict(torch.load(model_path)["state_dict"])
+        map_location = None if torch.cuda.is_available() else torch.device('cpu')
+        checkpoint = torch.load(model_path, map_location=map_location, weights_only=False)
+        model.load_state_dict(checkpoint["state_dict"])
 
     logging_dir = os.path.join(base_logging_dir, cfg.params.protocol_name)
 
+    accelerator = cfg.params.accelerator
+    devices = cfg.params.devices
+    if accelerator == 'gpu' and not torch.cuda.is_available():
+        print('CUDA is not available; running test on CPU.')
+        accelerator = 'cpu'
+        devices = 1
+
     trainer = Trainer(
-        accelerator='gpu',
+        accelerator=accelerator,
         callbacks=[],
-        devices=[0],
+        devices=devices,
         max_epochs=cfg.params.max_epochs,
         logger=CSVLogger(save_dir=logging_dir, name=''),
         deterministic=True
