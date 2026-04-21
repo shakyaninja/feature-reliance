@@ -24,8 +24,8 @@ TEST_SCRIPT_PATH = 'test.py'
 BASE_PARAMETERS = {
     'model.pretrained': [args.pretrained],
     'logging.exp_dir': [args.exp_dir],
-    'model.pretrained_version': [0],
-    'params.cuda_no': [5],
+    'model.pretrained_version': [1],
+    'params.cuda_no': [0],
     'params.seed': [6]
 }
 
