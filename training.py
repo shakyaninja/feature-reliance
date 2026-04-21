@@ -108,10 +108,17 @@ def main(cfg):
 
     logging_dir = os.path.join(cfg.logging.exp_dir, '{}/{}/{}'.format(cfg.params.dataset, cfg.model.name, log_flag))
 
+    accelerator = cfg.params.accelerator
+    devices = cfg.params.devices
+    if accelerator == 'gpu' and not torch.cuda.is_available():
+        print('CUDA is not available; training on CPU.')
+        accelerator = 'cpu'
+        devices = 1
+
     trainer = Trainer(
-        accelerator='gpu',
+        accelerator=accelerator,
         callbacks=callbacks,
-        devices=[0],
+        devices=devices,
         enable_checkpointing=cfg.logging.save_checkpoint,
         max_epochs=cfg.params.max_epochs,
         logger=CSVLogger(save_dir=logging_dir, name=''),
