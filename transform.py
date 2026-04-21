@@ -21,7 +21,7 @@ class WaveletSuppression:
         reconstructed_channels = []
         
         # 2. Process each color channel independently
-        for i in range(img_np.shape[1]):
+        for i in range(img_np.shape[2]):
             channel = img_np[:, :, i]
             
             # Decompose into components: LL (Shape) and details (Texture)
@@ -29,20 +29,22 @@ class WaveletSuppression:
             
             if self.suppression_type == 'texture':
                 # Keep LL (Shape), zero out high-frequency details
-                new_coeffs = [coeffs] 
+                new_coeffs = [coeffs[0]]
                 for detail_tuple in coeffs[1:]:
                     new_coeffs.append(tuple(np.zeros_like(d) for d in detail_tuple))
             
             elif self.suppression_type == 'shape':
                 # Zero out LL (Shape), keep high-frequency details
-                new_coeffs = [np.zeros_like(coeffs)] 
+                new_coeffs = [np.zeros_like(coeffs[0])]
                 new_coeffs.extend(coeffs[1:])
+            else:
+                raise ValueError(f"Unknown suppression_type: {self.suppression_type}")
 
             # Reconstruct the channel
             rec_channel = pywt.waverec2(new_coeffs, self.wavelet)
             
             # Fix any slight size mismatches from padding
-            rec_channel = rec_channel[:channel.shape, :channel.shape[2]]
+            rec_channel = rec_channel[:channel.shape[0], :channel.shape[1]]
             reconstructed_channels.append(rec_channel)
 
         # 3. Stack channels, clip valid pixel values, and return as Tensor
@@ -171,11 +173,10 @@ def get_transform(
     mean, std = get_dataset_statistics(dataset)
     compose = []
 
-    # Add standard resizing if needed (assuming Resize is part of the spatial processing)
-    if 'resize' in test_augmentations:
-        compose.append(transforms.Resize((224, 224)))
+    size = int(resize_size) if resize_size is not None else 224
+    # Native image sizes differ across samples (e.g. Caltech-101); batching requires fixed H×W before ToTensor.
+    compose.append(transforms.Resize((size, size)))
 
-    # 1. Convert to Tensor (scales pixels to 0-1)
     compose.append(transforms.ToTensor())
 
     # 2. Apply our DWT Suppression to the Tensor
