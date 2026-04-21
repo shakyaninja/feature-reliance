@@ -75,7 +75,6 @@ class DeepGlobeDataset(Dataset):
         target = self.targets[full_idx]
 
         image = Image.open(img_path).convert('RGB')
-        image = np.array(image)
         target = torch.tensor(target)
 
         if self.transform is not None:

@@ -17,15 +17,15 @@ class Flowers102Dataset(Dataset):
         self.transform = transform
 
         if split == 'train':
-            self.dataset = torch_datasets.Flowers102(dataset_path, split='train')
+            self.dataset = torch_datasets.Flowers102(dataset_path, split='train', download=True)
             self.targets = np.array(self.dataset._labels)
 
         if split == 'validation':
-            self.dataset = torch_datasets.Flowers102(dataset_path, split='val')
+            self.dataset = torch_datasets.Flowers102(dataset_path, split='val', download=True)
             self.targets = np.array(self.dataset._labels)
 
         if split == 'test':
-            self.dataset = torch_datasets.Flowers102(dataset_path, split='test')
+            self.dataset = torch_datasets.Flowers102(dataset_path, split='test', download=True)
             self.targets = np.array(self.dataset._labels)
 
     def __getitem__(self, idx: int):
@@ -36,10 +36,10 @@ class Flowers102Dataset(Dataset):
         if image.mode != "RGB":
             image = image.convert("RGB")
 
-        image = np.array(image)
-
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = np.array(image)
 
         return image, target
 

@@ -16,14 +16,14 @@ class STL10Dataset(Dataset):
     def __init__(self, dataset_path: str, split: str = None, transform: Optional[transforms.Compose] = None):
         self.split = split
         self.transform = transform
-        if split == 'train' or 'validation':
-            self.dataset = torch_datasets.STL10(dataset_path, split='train')
+        if split in ('train', 'validation'):
+            self.dataset = torch_datasets.STL10(dataset_path, split='train', download=True)
             self.targets = np.array(self.dataset.labels)
             self.train_val_idx = np.arange(len(self.dataset))
             self.deterministic_train_val_split()
 
         if split == 'test':
-            self.dataset = torch_datasets.STL10(dataset_path, split='test')
+            self.dataset = torch_datasets.STL10(dataset_path, split='test', download=True)
             self.targets = np.array(self.dataset.labels)
             self.test_idx = np.arange(len(self.dataset))
 
@@ -50,10 +50,10 @@ class STL10Dataset(Dataset):
         if image.mode != "RGB":
             image = image.convert("RGB")
 
-        image = np.array(image)
-
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = np.array(image)
 
         return image, target
 

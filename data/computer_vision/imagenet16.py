@@ -46,10 +46,10 @@ class ImageNet16Dataset(Dataset):
         if image.mode != "RGB":
             image = image.convert("RGB")
 
-        image = np.array(image)
-
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = np.array(image)
 
         return image, target
 

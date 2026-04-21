@@ -14,7 +14,7 @@ from lightning.pytorch import LightningDataModule
 
 class Caltech101Dataset(Dataset):
     def __init__(self, dataset_path: str, split: str = None, transform: Optional[transforms.Compose] = None):
-        self.dataset = torch_datasets.Caltech101(dataset_path)
+        self.dataset = torch_datasets.Caltech101(dataset_path, download=True)
         self.split = split
         self.transform = transform
         self.targets = np.array(self.dataset.y)
@@ -48,10 +48,10 @@ class Caltech101Dataset(Dataset):
         if image.mode != "RGB":
             image = image.convert("RGB")
 
-        image = np.array(image)
-
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = np.array(image)
 
         return image, target
 
