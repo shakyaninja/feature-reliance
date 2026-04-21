@@ -14,6 +14,8 @@ class GeneralParameter:
     pin_memory: bool = True
     protocol_name: str = 'simple_test'
     slurm_bypass: bool = False
+    accelerator: str = 'gpu'
+    devices: int = 1
 
 
 @dataclass
@@ -33,6 +35,8 @@ class DataAugmentationParameter:
     search_window_size: Optional[int] = 21
     gaussian_k: Optional[int] = 11
     gaussian_sigma: Optional[float] = 1.0
+    wavelet_type: Optional[str] = 'haar'
+    wavelet_level: Optional[int] = 1
 
 
 @dataclass
