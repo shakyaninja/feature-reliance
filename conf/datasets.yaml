@@ -1,31 +1,31 @@
 caltech101:
   task: single_label
-  root_path: /data/tomburgert/data/datasets
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets
   num_classes: 101
   num_channels: 3
 flowers102:
   task: single_label
-  root_path: /data/tomburgert/data/datasets
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets
   num_classes: 102
   num_channels: 3
 food101:
   task: single_label
-  root_path: /data/tomburgert/data/datasets
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\Food101
   num_classes: 101
   num_channels: 3
 oxfordiiitpet:
   task: single_label
-  root_path: /data/tomburgert/data/datasets
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets
   num_classes: 37
   num_channels: 3
 stanfordcars:
   task: single_label
-  root_path: /data/tomburgert/data/datasets
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\StanfordCars
   num_classes: 196
   num_channels: 3
 stl10:
   task: single_label
-  root_path: /data/tomburgert/data/datasets
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets
   num_classes: 10
   num_channels: 3
 imagenet:
@@ -36,53 +36,53 @@ imagenet:
 
 bloodmnist:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/bloodmnist
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\bloodmnist
   num_classes: 8
   num_channels: 3
 retinamnist:
   task: ordinal_regression
-  root_path: /data/tomburgert/data/datasets/retinamnist
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\retinamnist
   num_classes: 5
   num_channels: 3
 chestmnist:
   task: binary_classification
-  root_path: /data/tomburgert/data/datasets/chestmnist
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\chestmnist
   num_classes: 1
   num_channels: 3
 pathmnist:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/pathmnist
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\pathmnist
   num_classes: 9
   num_channels: 3
 dermamnist:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/dermamnist
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\dermamnist
   num_classes: 7
   num_channels: 3
 
 
 rsd46whu:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/RSD46-WHU
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\RSD46-WHU
   num_classes: 46
   num_channels: 3
 aid:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/AID
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\AID
   num_classes: 30
   num_channels: 3
 ucmerced:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/UCMerced
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\UCMerced
   num_classes: 21
   num_channels: 3
 patternnet:
   task: single_label
-  root_path: /data/tomburgert/data/datasets/PatternNet
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\PatternNet
   num_classes: 38
   num_channels: 3
 deepglobe:
   task: multi_label
-  root_path: /data/tomburgert/data/datasets/DeepGlobe
+  root_path: C:\Users\LENOVO\OneDrive - University of Roehampton\University\Assignments\Module 3\feature-reliance\data\datasets\DeepGlobe
   num_classes: 6
   num_channels: 3

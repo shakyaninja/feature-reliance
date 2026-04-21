@@ -160,8 +160,8 @@ def filter_balanced_multilabel_subset(images, labels, seed=42):
 
 # run conversion to multi-label dataset
 # use only train because valid and test do not have labels
-source_path = '/data_read_only/deepGlobe/train'
-destination_path = '/data/tomburgert/data/datasets/DeepGlobe/images'
+source_path = 'data/datasets/DeepGlobe/train'
+destination_path = 'data/datasets/DeepGlobe/images'
 
 images, labels = extract_tiles_and_labels(source_path, tile_size=256)
 images_subset, labels_subset = filter_balanced_multilabel_subset(images, labels)

@@ -19,9 +19,13 @@ params:
   num_workers: 1
   batch_size: 32
   pin_memory: true
+  accelerator: gpu
+  devices: 1
 dataaug:
   train_augmentations: 'none'
   test_augmentations: 'none'
+  wavelet_type: 'haar'
+  wavelet_level: 1
 model:
   name: resnet50
   pretrained: false

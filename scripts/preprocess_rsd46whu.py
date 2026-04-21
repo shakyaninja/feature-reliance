@@ -47,20 +47,20 @@ def save_images_from_parquet(parquet_path, output_dir):
         image.save(filepath, format="PNG")
 
 
-base_path = '/data/tomburgert/data/datasets/RSD46-WHU'
+base_path = 'data/datasets/RSD46-WHU'
 
 # process partquet file 1
-path = os.path.join(base_path, '/parquet_files/train-00000-of-00004-27e4fea5a3d6f122.parquet')
+path = 'data/datasets/RSD46-WHU/parquet_files/train-00000-of-00004-27e4fea5a3d6f122.parquet'
 save_images_from_parquet(path, os.path.join(base_path, 'images'))
 
 # process partquet file 2
-path = os.path.join(base_path, '/parquet_files/train-00001-of-00004-9d6b98a42da0cd9c.parquet')
+path = 'data/datasets/RSD46-WHU/parquet_files/train-00001-of-00004-9d6b98a42da0cd9c.parquet'
 save_images_from_parquet(path, os.path.join(base_path, 'images'))
 
 # process partquet file 3
-path = os.path.join(base_path, '/parquet_files/train-00002-of-00004-4450644e4b0b5cf2.parquet')
+path = 'data/datasets/RSD46-WHU/parquet_files/train-00002-of-00004-4450644e4b0b5cf2.parquet'
 save_images_from_parquet(path, os.path.join(base_path, 'images'))
 
 # process partquet file 4
-path = os.path.join(base_path, '/parquet_files/train-00003-of-00004-1f0f07cbfc2667e5.parquet')
+path = 'data/datasets/RSD46-WHU/parquet_files/train-00003-of-00004-1f0f07cbfc2667e5.parquet'
 save_images_from_parquet(path, os.path.join(base_path, 'images'))
