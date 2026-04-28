@@ -17,7 +17,7 @@ from lightning.pytorch import LightningDataModule
 class AIDDataset(Dataset):
     def __init__(self, dataset_path: str, split: str = None, transform: Optional[transforms.Compose] = None):
         self.dataset_path = dataset_path
-        self.image_dir = os.path.join(dataset_path, 'data')
+        self.image_dir = self._resolve_image_dir(dataset_path)
         self.transform = transform
         self.split = split
 
@@ -31,6 +31,25 @@ class AIDDataset(Dataset):
         self.all_idx = np.arange(len(self.image_paths))
         self.deterministic_train_val_test_split()
         self.initialize_split()
+
+    @staticmethod
+    def _resolve_image_dir(dataset_path: str) -> str:
+        candidate_dirs = [
+            os.path.join(dataset_path, "data"),
+            os.path.join(dataset_path, "images"),
+            dataset_path,
+        ]
+
+        for candidate in candidate_dirs:
+            if not os.path.isdir(candidate):
+                continue
+            if any(d.is_dir() for d in os.scandir(candidate)):
+                return candidate
+
+        raise FileNotFoundError(
+            f"No class-folder image directory found under '{dataset_path}'. "
+            "Expected one of: 'data/', 'images/', or class folders directly in dataset root."
+        )
 
     def read_image_paths(self):
         for cl_name in self.classes:
@@ -67,11 +86,12 @@ class AIDDataset(Dataset):
         target = self.targets[full_idx]
 
         image = Image.open(img_path).convert('RGB')
-        image = np.array(image)
         target = torch.tensor(target)
 
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = torch.from_numpy(np.array(image)).permute(2, 0, 1).float() / 255.0
 
         return image, target
 

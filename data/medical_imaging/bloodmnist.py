@@ -1,5 +1,6 @@
 from typing import Optional
 
+import os
 import numpy as np
 
 import torch
@@ -13,7 +14,8 @@ from medmnist import BloodMNIST
 
 class BloodMNISTDataset():
     def __init__(self, dataset_path: str, split: str = None, transform: Optional[transforms.Compose] = None):
-        self.dataset = BloodMNIST(root=dataset_path, split=split, download=False, size=224)
+        os.makedirs(dataset_path, exist_ok=True)
+        self.dataset = BloodMNIST(root=dataset_path, split=split, download=True, size=224)
         self.split = split
         self.transform = transform
         self.targets = self.dataset.labels[:, 0]
@@ -26,10 +28,10 @@ class BloodMNISTDataset():
         if image.mode != "RGB":
             image = image.convert("RGB")
 
-        image = np.array(image)
-
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = torch.from_numpy(np.array(image)).permute(2, 0, 1).float() / 255.0
 
         return image, target
 

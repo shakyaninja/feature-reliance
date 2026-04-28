@@ -67,11 +67,12 @@ class RSD46WHUDataset(Dataset):
         target = self.targets[full_idx]
 
         image = Image.open(img_path).convert('RGB')
-        image = np.array(image)
         target = torch.tensor(target)
 
         if self.transform is not None:
             image = self.transform(image)
+        else:
+            image = torch.from_numpy(np.array(image)).permute(2, 0, 1).float() / 255.0
 
         return image, target
 
