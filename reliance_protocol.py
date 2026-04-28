@@ -1,3 +1,4 @@
+import os
 import sys
 import argparse
 from itertools import product
@@ -24,7 +25,6 @@ TEST_SCRIPT_PATH = 'test.py'
 BASE_PARAMETERS = {
     'model.pretrained': [args.pretrained],
     'logging.exp_dir': [args.exp_dir],
-    'model.pretrained_version': [1],
     'params.cuda_no': [0],
     'params.seed': [6]
 }
@@ -157,10 +157,29 @@ ALL_SETUPS = [
 for dataset in args.datasets:
     for model in args.models:
 
+        log_flag = 'pretrained' if args.pretrained else 'from_scratch'
+        base_logging_dir = os.path.join(args.exp_dir, f'{dataset}/{model}/{log_flag}')
+        
+        latest_version = 1
+        if os.path.exists(base_logging_dir):
+            versions = []
+            for d in os.listdir(base_logging_dir):
+                if d.startswith('version_') and os.path.isdir(os.path.join(base_logging_dir, d)):
+                    try:
+                        v = int(d.split('_')[1])
+                        ckpt_path = os.path.join(base_logging_dir, d, 'checkpoints', 'best_model.ckpt')
+                        if os.path.exists(ckpt_path):
+                            versions.append(v)
+                    except ValueError:
+                        continue
+            if versions:
+                latest_version = max(versions)
+
         BASE_PARAMETERS.update(
             {
                 'model.name': [model],
-                'params.dataset': [dataset]
+                'params.dataset': [dataset],
+                'model.pretrained_version': [latest_version]
             }
         )
 
